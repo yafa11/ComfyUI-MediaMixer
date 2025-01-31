@@ -23,7 +23,9 @@ class VideoMerge:
             Video_A = Video_A.unsqueeze(0)
         if Video_B.dim() == 3:
             Video_B = Video_B.unsqueeze(0)
-
+        # If the tensors are on different devices, move to the same device
+        if Video_A.device != Video_B.device:
+            Video_B = Video_B.to(Video_A.device)
         # Concatenate the images along the first dimension (batch dimension)
         Video = torch.cat((Video_A, Video_B), dim=0)
         
